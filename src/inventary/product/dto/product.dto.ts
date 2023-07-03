@@ -26,24 +26,18 @@ export class ProductDto {
   @IsNotEmpty()
   @IsNumber()
   @IsPositive()
-  price: number;
+  unit_price: number;
 
   @IsNotEmpty()
   @IsNumber()
   @IsPositive()
-  quantity_aviable: number;
-
-  @IsNotEmpty()
-  @IsBoolean()
-  stock: boolean;
-
-  @IsNotEmpty()
-  @IsString()
-  image: string;
+  quantity_available: number;
 
   @IsNotEmpty()
   @IsBoolean()
   until_box: boolean;
+  
+
 
   // id_category: number;
   @Type(() => CategoryDto)
@@ -53,4 +47,6 @@ export class ProductDto {
   category: CategoryDto;
 }
 
-export class UpdateProductDto extends PartialType(ProductDto) {}
+export class UpdateProductDto extends PartialType(ProductDto) {
+  
+}

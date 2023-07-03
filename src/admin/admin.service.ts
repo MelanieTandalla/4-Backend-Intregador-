@@ -1,9 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { AdminDto, UpdateAdminDto } from './dto/admin.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Admin } from './entities/admin.entity';
 import { Repository } from 'typeorm';
 import { HandleError } from 'src/common/handleError';
+import { genSalt, hash } from 'bcrypt';
 
 @Injectable()
 export class AdminService {
@@ -60,5 +61,29 @@ export class AdminService {
     await this.adminRepository.remove(admin);
 
     return true;
+  }
+
+  async findAdminBy(parameter: string) {
+    const admin = await this.adminRepository.findOneBy({ gmail: parameter });
+
+    if (!admin) throw new UnauthorizedException('Password or Email incorrect');
+
+    return admin;
+  }
+
+  async createAdminWith({ password, ...adminData }: AdminDto) {
+    const hashedPassword = await hash(password, await genSalt(8));
+
+    const admin = this.adminRepository.create({
+      ...adminData,
+      password: hashedPassword,
+    });
+
+    try {
+      await this.adminRepository.save(admin);
+      return admin;
+    } catch (error) {
+      this.errorLog.LogError(error);
+    }
   }
 }

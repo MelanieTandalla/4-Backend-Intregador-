@@ -17,4 +17,14 @@ export class CategoryDto {
   // @IsObject()
 }
 
-export class UpdateCategoryDto extends PartialType(CategoryDto) {}
+export class UpdateCategoryDto extends PartialType(CategoryDto) {
+
+  @IsString()
+  @IsNotEmpty()
+  name_category?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  description?: string;
+
+}

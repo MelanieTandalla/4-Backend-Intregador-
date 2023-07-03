@@ -15,6 +15,11 @@ export class AdminDto {
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(5)
+  last_name: string;
+
+  @IsString()
+  @IsNotEmpty()
   @IsEmail()
   gmail: string;
 
@@ -26,9 +31,6 @@ export class AdminDto {
   @IsNotEmpty()
   password: string;
 
-  @IsString()
-  @IsNotEmpty()
-  image: string;
 }
 
 export class UpdateAdminDto extends PartialType(AdminDto) {}

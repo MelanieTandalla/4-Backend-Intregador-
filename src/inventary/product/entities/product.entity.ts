@@ -25,19 +25,14 @@ export class Product {
   description: string;
 
   @Column()
-  price: number;
+  unit_price: number;
 
   @Column()
-  quantity_aviable: number;
-
-  @Column()
-  stock: boolean;
-
-  @Column()
-  image: string;
+  quantity_available: number;
 
   @Column()
   until_box: boolean;
+
 
   //Relations
   //Category
